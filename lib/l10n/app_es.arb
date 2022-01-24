@@ -1,0 +1,10 @@
+{
+	"title": "Tienda de miel",
+	"winnieName": "Winnie the Pooh",
+	"donkey": "Ígor",
+    "kangaroo": "Cangu",
+	"honey": "{amount, plural, =0{Nada aún} =1{{amount} Frasco} =other{{amount} Frascos}}",
+	"manufacturer": "{manufacturer}",
+	"value": "{value}",
+	"production": "Hecho {date}"
+}

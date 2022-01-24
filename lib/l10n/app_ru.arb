@@ -1,0 +1,10 @@
+{
+	"title": "Медовая лавка",
+	"winnieName": "Винни-Пух",
+	"donkey": "Иа-Иа",
+	"kangaroo": "Кенга",
+	"honey": "{amount, plural, =0{Пока ничего} =1{{amount} банка} =few{{amount} банки} =other{{amount} банок}}",
+	"manufacturer": "{manufacturer}",
+	"value": "{value}",
+	"production": "Произведено {date}"
+}

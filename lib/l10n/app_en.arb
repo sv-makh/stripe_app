@@ -1,0 +1,36 @@
+{
+	"title": "Honey shop",
+	"winnieName": "Winnie the Pooh",
+	"donkey": "Eeyore",
+	"kangaroo": "Kanga",
+	"honey": "{amount, plural, =0{No Jars yet} =1{{amount} Jar} =other{{amount} Jars}}",
+	"@honey": {
+		"placeholders" : {
+			"amount": {}
+		}
+	},
+	"manufacturer": "{manufacturer}",
+	"@manufacturer": {
+	    "placeholders" : {
+	        "manufacturer": {}
+	    }
+	},
+	"value": "{value}",
+	"@value": {
+	    "placeholders" : {
+	        "value": {
+			    "type": "double",
+			    "format": "currency"
+	        }
+	    }
+	},
+	"production": "Made {date}",
+	"@production": {
+	    "placeholders": {
+	        "date": {
+	            "type": "DateTime",
+	            "format": "yMMMd"
+	        }
+	    }
+	}
+}
