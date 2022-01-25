@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,48 +12,48 @@ class MyApp extends StatefulWidget {
 
   @override
   _MyAppState createState() => new _MyAppState();
-}
 
-//https://stackoverflow.com/questions/49441212/flutter-multi-lingual-application-how-to-override-the-locale/59410830#59410830
-
-class LocaleModel with ChangeNotifier {
-  Locale locale = Locale('en');
-  Locale get getlocale => locale;
-
-  void changelocale(Locale l) {
-    locale = l;
-    notifyListeners();
+  //перестройка приложения при изменении пользователем языка
+  static void setLocale(BuildContext context, Locale locale) {
+    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    state!.setState(() {
+      state.locale = locale;
+    });
   }
 }
 
 class _MyAppState extends State<MyApp> {
 
+  Locale? locale;
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => LocaleModel(),
-      child: Consumer<LocaleModel>(
-        builder: (context, provider, child) =>
-        MaterialApp(
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: [
-            const Locale('en', ''),
-            const Locale('es', ''),
-            const Locale('ru', ''),
-          ],
-          locale: Provider.of<LocaleModel>(context).locale,
-          theme: ThemeData(primarySwatch: Colors.blue,),
-          initialRoute: '/',
-          routes: {
-            '/': (context) => MyHomeWidget(),
-          },
-        )
-      )
+    return MaterialApp(
+      //при запуске приложения переменная locale = null,
+      //поэтому здесь locale присваивается локаль устройства
+      localeResolutionCallback: (deviceLocale, supportedLocales) {
+        if (this.locale == null) {
+          this.locale = deviceLocale;
+        }
+        return this.locale;
+      },
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      locale: locale,
+      supportedLocales: [
+        const Locale('en', ''),
+        const Locale('es', ''),
+        const Locale('ru', ''),
+      ],
+      theme: ThemeData(primarySwatch: Colors.blue,),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => MyHomeWidget(),
+      },
     );
   }
 }
@@ -74,25 +73,44 @@ class _MyHomeWidgetState extends State<MyHomeWidget> {
     return Scaffold(
       appBar: AppBar(
         title: Text(translation.title),
+        //кнопки для смены языка (изменения локали)
         actions: [
           TextButton(
             onPressed: () {
-              Provider.of<LocaleModel>(context, listen: false).changelocale(Locale("en"));
+              MyApp.setLocale(context, Locale("en"));
             },
-            child: Text('🇺🇸')
+            child: Container(
+              width: 40,
+              height: 40,
+              color: (Localizations.localeOf(context).languageCode != 'en') ?
+                Colors.blue : Colors.lightBlueAccent,
+              child: Center( child: Text('🇺🇸'))
+              )
           ),
           TextButton(
               onPressed: () {
-                Provider.of<LocaleModel>(context, listen: false).changelocale(Locale("ru"));
+                MyApp.setLocale(context, Locale("ru"));
               },
-              child: Text('🇷🇺')
+              child: Container(
+                width: 40,
+                height: 40,
+                color: (Localizations.localeOf(context).languageCode != 'ru') ?
+                  Colors.blue : Colors.lightBlueAccent,
+                child: Center( child: Text('🇷🇺'))
+              )
           ),
           TextButton(
               onPressed: () {
-                Provider.of<LocaleModel>(context, listen: false).changelocale(Locale("es"));
+                MyApp.setLocale(context, Locale("es"));
               },
-              child: Text('🇪🇸')
-          ),
+              child: Container(
+                width: 40,
+                height: 40,
+                color: (Localizations.localeOf(context).languageCode != 'es') ?
+                  Colors.blue : Colors.lightBlueAccent,
+                child: Center( child: Text('🇪🇸'))
+              ),
+          )
         ],
       ),
       body: Column(
@@ -104,7 +122,7 @@ class _MyHomeWidgetState extends State<MyHomeWidget> {
             translation.production(DateTime.parse("2022-01-17")),
             translation.honey(4),
             translation.manufacturer("\"Bearhoney\""),
-            translation.value(20)//'4 Jars - USD 20'
+            translation.value(20)
           ),
           _myCard(context,
               'https://upload.wikimedia.org/wikipedia/ru/7/70/Eeyore.gif',
