@@ -1,10 +1,18 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:localisation_sample/my_card.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:http/http.dart' as http;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = "pk_test_51KjNQvGdIA07RfpY6wd42kYC60ZYvYzrZF1Ju7ryzsvxQCDiPCVavqwWXXmoOi3m6eUMu9HD5fr5cXtxDMDk2xrH00ZiOrebB5";
+  await Stripe.instance.applySettings();
   runApp(MyApp());
 }
 
@@ -116,7 +124,7 @@ class _MyHomeWidgetState extends State<MyHomeWidget> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          _myCard(context,
+          myCard(context,
             'https://i.pinimg.com/originals/a1/90/5c/a1905c3d2adac96c9e9c094dccafc857.jpg',
             translation.winnieName,
             translation.production(DateTime.parse("2022-01-17")),
@@ -124,7 +132,7 @@ class _MyHomeWidgetState extends State<MyHomeWidget> {
             translation.manufacturer("\"Bearhoney\""),
             translation.value(20)
           ),
-          _myCard(context,
+          myCard(context,
               'https://upload.wikimedia.org/wikipedia/ru/7/70/Eeyore.gif',
               translation.donkey,
               translation.production(DateTime.parse("2022-01-18")),
@@ -132,7 +140,7 @@ class _MyHomeWidgetState extends State<MyHomeWidget> {
               translation.manufacturer("\"Donkeyhoney\""),
               translation.value(20)
           ),
-          _myCard(context,
+          myCard(context,
               'https://www.youloveit.ru/uploads/gallery/comthumb/761/youloveit_ru_winnie_pooh_baby18.jpg',
               translation.kangaroo,
               translation.production(DateTime.parse("2022-01-11")),
@@ -144,37 +152,4 @@ class _MyHomeWidgetState extends State<MyHomeWidget> {
       ),
     );
   }
-}
-
-Widget _myCard(BuildContext context,
-    String image, String name, String date, String honey, String manufacturer, String value) {
-
-  return Card(
-    elevation: 5,
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 150,
-            width: 150,
-            child: Image.network(image),
-          ),
-          SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                name,
-                style: TextStyle(fontSize: 20),
-              ),
-              Text(date),
-              Text("$honey $manufacturer - $value"),
-            ],
-          ),
-        ],
-      ),
-    ),
-  );
 }
