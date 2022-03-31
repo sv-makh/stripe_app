@@ -29,3 +29,7 @@ dev_dependencies:
 flutter:
   generate: true
   uses-material-design: true
+  plugin:
+    platforms:
+      ios:
+        pluginClass: AppDelegate
