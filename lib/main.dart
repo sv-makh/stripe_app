@@ -8,11 +8,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:localisation_sample/my_card.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
+import 'package:localisation_sample/constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //Stripe.publishableKey = "pk_test_51KjNQvGdIA07RfpY6wd42kYC60ZYvYzrZF1Ju7ryzsvxQCDiPCVavqwWXXmoOi3m6eUMu9HD5fr5cXtxDMDk2xrH00ZiOrebB5";
-  //await Stripe.instance.applySettings();
+  Stripe.publishableKey = stripePublishableKey;
+  await Stripe.instance.applySettings();
   runApp(MyApp());
 }
 
@@ -57,7 +58,7 @@ class _MyAppState extends State<MyApp> {
         const Locale('es', ''),
         const Locale('ru', ''),
       ],
-      theme: ThemeData(primarySwatch: Colors.blue,),
+      theme: ThemeData(primarySwatch: Colors.purple,),
       initialRoute: '/',
       routes: {
         '/': (context) => MyHomeWidget(),
@@ -91,7 +92,7 @@ class _MyHomeWidgetState extends State<MyHomeWidget> {
               width: 40,
               height: 40,
               color: (Localizations.localeOf(context).languageCode != 'en') ?
-                Colors.blue : Colors.lightBlueAccent,
+                Colors.purple : Colors.purpleAccent,
               child: Center( child: Text('🇺🇸'))
               )
           ),
@@ -103,7 +104,7 @@ class _MyHomeWidgetState extends State<MyHomeWidget> {
                 width: 40,
                 height: 40,
                 color: (Localizations.localeOf(context).languageCode != 'ru') ?
-                  Colors.blue : Colors.lightBlueAccent,
+                Colors.purple : Colors.purpleAccent,
                 child: Center( child: Text('🇷🇺'))
               )
           ),
@@ -115,7 +116,7 @@ class _MyHomeWidgetState extends State<MyHomeWidget> {
                 width: 40,
                 height: 40,
                 color: (Localizations.localeOf(context).languageCode != 'es') ?
-                  Colors.blue : Colors.lightBlueAccent,
+                Colors.purple : Colors.purpleAccent,
                 child: Center( child: Text('🇪🇸'))
               ),
           )
@@ -131,25 +132,28 @@ class _MyHomeWidgetState extends State<MyHomeWidget> {
             translation.honey(4),
             translation.manufacturer("\"Bearhoney\""),
             translation.value(20),
-            translation.button
+            translation.button,
+            2000
           ),
           myCard(context,
-              'https://upload.wikimedia.org/wikipedia/ru/7/70/Eeyore.gif',
-              translation.donkey,
-              translation.production(DateTime.parse("2022-01-18")),
-              translation.honey(1),
-              translation.manufacturer("\"Donkeyhoney\""),
-              translation.value(20),
-              translation.button
+            'https://upload.wikimedia.org/wikipedia/ru/7/70/Eeyore.gif',
+            translation.donkey,
+            translation.production(DateTime.parse("2022-01-18")),
+            translation.honey(1),
+            translation.manufacturer("\"Donkeyhoney\""),
+            translation.value(20),
+            translation.button,
+            2000
           ),
           myCard(context,
-              'https://www.youloveit.ru/uploads/gallery/comthumb/761/youloveit_ru_winnie_pooh_baby18.jpg',
-              translation.kangaroo,
-              translation.production(DateTime.parse("2022-01-11")),
-              translation.honey(0),
-              translation.manufacturer(""),
-              translation.value(0),
-              translation.button
+            'https://www.youloveit.ru/uploads/gallery/comthumb/761/youloveit_ru_winnie_pooh_baby18.jpg',
+            translation.kangaroo,
+            translation.production(DateTime.parse("2022-01-11")),
+            translation.honey(0),
+            translation.manufacturer(""),
+            translation.value(0),
+            translation.button,
+            0
           ),
         ],
       ),
