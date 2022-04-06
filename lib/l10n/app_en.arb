@@ -32,5 +32,6 @@
 	            "format": "yMMMd"
 	        }
 	    }
-	}
+	},
+	"button": "Take my"
 }

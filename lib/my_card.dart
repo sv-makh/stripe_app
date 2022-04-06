@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 Widget myCard(BuildContext context,
-    String image, String name, String date, String honey, String manufacturer, String value) {
+    String image, String name, String date, String honey, String manufacturer, String value, String button) {
 
   return Card(
     elevation: 5,
@@ -25,6 +25,11 @@ Widget myCard(BuildContext context,
               ),
               Text(date),
               Text("$honey $manufacturer - $value"),
+              ElevatedButton(
+                child: Text("$button $value"),
+                onPressed: () {},
+
+              )
             ],
           ),
         ],

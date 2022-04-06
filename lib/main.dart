@@ -11,8 +11,8 @@ import 'package:http/http.dart' as http;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Stripe.publishableKey = "pk_test_51KjNQvGdIA07RfpY6wd42kYC60ZYvYzrZF1Ju7ryzsvxQCDiPCVavqwWXXmoOi3m6eUMu9HD5fr5cXtxDMDk2xrH00ZiOrebB5";
-  await Stripe.instance.applySettings();
+  //Stripe.publishableKey = "pk_test_51KjNQvGdIA07RfpY6wd42kYC60ZYvYzrZF1Ju7ryzsvxQCDiPCVavqwWXXmoOi3m6eUMu9HD5fr5cXtxDMDk2xrH00ZiOrebB5";
+  //await Stripe.instance.applySettings();
   runApp(MyApp());
 }
 
@@ -130,7 +130,8 @@ class _MyHomeWidgetState extends State<MyHomeWidget> {
             translation.production(DateTime.parse("2022-01-17")),
             translation.honey(4),
             translation.manufacturer("\"Bearhoney\""),
-            translation.value(20)
+            translation.value(20),
+            translation.button
           ),
           myCard(context,
               'https://upload.wikimedia.org/wikipedia/ru/7/70/Eeyore.gif',
@@ -138,7 +139,8 @@ class _MyHomeWidgetState extends State<MyHomeWidget> {
               translation.production(DateTime.parse("2022-01-18")),
               translation.honey(1),
               translation.manufacturer("\"Donkeyhoney\""),
-              translation.value(20)
+              translation.value(20),
+              translation.button
           ),
           myCard(context,
               'https://www.youloveit.ru/uploads/gallery/comthumb/761/youloveit_ru_winnie_pooh_baby18.jpg',
@@ -146,7 +148,8 @@ class _MyHomeWidgetState extends State<MyHomeWidget> {
               translation.production(DateTime.parse("2022-01-11")),
               translation.honey(0),
               translation.manufacturer(""),
-              translation.value(0)
+              translation.value(0),
+              translation.button
           ),
         ],
       ),

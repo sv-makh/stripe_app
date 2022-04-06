@@ -6,5 +6,6 @@
 	"honey": "{amount, plural, =0{Nada aún} =1{{amount} Frasco} =other{{amount} Frascos}}",
 	"manufacturer": "{manufacturer}",
 	"value": "{value}",
-	"production": "Hecho {date}"
+	"production": "Hecho {date}",
+	"button": "Toma mis"
 }
