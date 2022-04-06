@@ -1,2 +1,2 @@
-String stripePublishableKey = "pk_test_51KjNQvGdIA07RfpY6wd42kYC60ZYvYzrZF1Ju7ryzsvxQCDiPCVavqwWXXmoOi3m6eUMu9HD5fr5cXtxDMDk2xrH00ZiOrebB5";
-String paymentIntentUrl = "https://us-central1-stripe-test-2f655.cloudfunctions.net/stripePaymentIntentRequest";
+String stripePublishableKey = "pk_test_";
+String paymentIntentUrl = "https://.../stripePaymentIntentRequest";
