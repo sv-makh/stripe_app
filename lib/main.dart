@@ -1,13 +1,8 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:localisation_sample/my_card.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:http/http.dart' as http;
 import 'package:localisation_sample/constants.dart';
 
 void main() async {
@@ -20,7 +15,7 @@ void main() async {
 class MyApp extends StatefulWidget {
 
   @override
-  _MyAppState createState() => new _MyAppState();
+  _MyAppState createState() => _MyAppState();
 
   //перестройка приложения при изменении пользователем языка
   static void setLocale(BuildContext context, Locale locale) {
@@ -93,31 +88,31 @@ class _MyHomeWidgetState extends State<MyHomeWidget> {
               height: 40,
               color: (Localizations.localeOf(context).languageCode != 'en') ?
                 Colors.purple : Colors.purpleAccent,
-              child: Center( child: Text('🇺🇸'))
+              child: const Center( child: Text('🇺🇸'))
               )
           ),
           TextButton(
               onPressed: () {
-                MyApp.setLocale(context, Locale("ru"));
+                MyApp.setLocale(context, const Locale("ru"));
               },
               child: Container(
                 width: 40,
                 height: 40,
                 color: (Localizations.localeOf(context).languageCode != 'ru') ?
                 Colors.purple : Colors.purpleAccent,
-                child: Center( child: Text('🇷🇺'))
+                child: const Center( child: Text('🇷🇺'))
               )
           ),
           TextButton(
               onPressed: () {
-                MyApp.setLocale(context, Locale("es"));
+                MyApp.setLocale(context, const Locale("es"));
               },
               child: Container(
                 width: 40,
                 height: 40,
                 color: (Localizations.localeOf(context).languageCode != 'es') ?
                 Colors.purple : Colors.purpleAccent,
-                child: Center( child: Text('🇪🇸'))
+                child: const Center( child: Text('🇪🇸'))
               ),
           )
         ],
@@ -126,7 +121,7 @@ class _MyHomeWidgetState extends State<MyHomeWidget> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           myCard(context,
-            'https://i.pinimg.com/originals/a1/90/5c/a1905c3d2adac96c9e9c094dccafc857.jpg',
+            winnieImg,
             translation.winnieName,
             translation.production(DateTime.parse("2022-01-17")),
             translation.honey(4),
@@ -136,7 +131,7 @@ class _MyHomeWidgetState extends State<MyHomeWidget> {
             2000
           ),
           myCard(context,
-            'https://upload.wikimedia.org/wikipedia/ru/7/70/Eeyore.gif',
+            donkeyImg,
             translation.donkey,
             translation.production(DateTime.parse("2022-01-18")),
             translation.honey(1),
@@ -146,7 +141,7 @@ class _MyHomeWidgetState extends State<MyHomeWidget> {
             2000
           ),
           myCard(context,
-            'https://www.youloveit.ru/uploads/gallery/comthumb/761/youloveit_ru_winnie_pooh_baby18.jpg',
+            kengaImg,
             translation.kangaroo,
             translation.production(DateTime.parse("2022-01-11")),
             translation.honey(0),
