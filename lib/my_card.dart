@@ -19,7 +19,17 @@ Widget myCard(BuildContext context,
             'amount': amount.toString(),
           });
 
-      final jsonResponse = jsonDecode(response.body);
+      /*final response = await http.post(
+        Uri.parse(paymentIntentUrl),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+          'a': 'a',
+        }),
+      );*/
+
+      final jsonResponse = json.decode(json.encode(response.body));
       log(jsonResponse.toString());
 
       //2. initialize the payment sheet
