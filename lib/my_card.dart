@@ -13,11 +13,11 @@ Widget myCard(BuildContext context,
     try {
       // 1. create payment intent on the server
       final response = await http.post(
-          Uri.parse(paymentIntentUrl),
-          body: {
+          Uri.parse("$paymentIntentUrl/payment-sheet"),
+          body: json.encode({
             'email': email,
             'amount': amount.toString(),
-          });
+          }));
 
       /*final response = await http.post(
         Uri.parse(paymentIntentUrl),
@@ -29,7 +29,7 @@ Widget myCard(BuildContext context,
         }),
       );*/
 
-      final jsonResponse = json.decode(json.encode(response.body));
+      final jsonResponse = json.decode(response.body);
       log(jsonResponse.toString());
 
       //2. initialize the payment sheet
