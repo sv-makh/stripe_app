@@ -9,28 +9,43 @@ Widget myCard(BuildContext context,
     String image, String name, String date, String honey, String manufacturer,
     String value, String button, int amount) {
 
+  Future<Map<String, dynamic>> _createTestPaymentSheet({required int amount}) async {
+    final url = Uri.parse('$paymentIntentUrl/payment-sheet');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        'amount': amount.toString(),
+      }),
+    );
+    final body = json.decode(response.body);
+    if (body['error'] != null) {
+      throw Exception(body['error']);
+    }
+    return body;
+  }
+
   Future<void> initPaymentSheet(context, {required String email, required int amount}) async {
     try {
       // 1. create payment intent on the server
-      final response = await http.post(
-          Uri.parse("$paymentIntentUrl/payment-sheet"),
-          body: json.encode({
-            'email': email,
-            'amount': amount.toString(),
-          }));
 
-      /*final response = await http.post(
-        Uri.parse(paymentIntentUrl),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: json.encode({
-          'a': 'a',
-        }),
-      );*/
-
-      final jsonResponse = json.decode(response.body);
+      final jsonResponse = await _createTestPaymentSheet(amount: amount);
       log(jsonResponse.toString());
+
+      final billingDetails = flutter_stripe.BillingDetails(
+        email: 'email@stripe.com',
+        phone: '+48888000888',
+        address: flutter_stripe.Address(
+          city: 'Houston',
+          country: 'US',
+          line1: '1459  Circle Drive',
+          line2: '',
+          state: 'Texas',
+          postalCode: '77063',
+        ),
+      );
 
       //2. initialize the payment sheet
       await flutter_stripe.Stripe.instance.initPaymentSheet(
@@ -42,6 +57,7 @@ Widget myCard(BuildContext context,
           style: ThemeMode.light,
           testEnv: true,
           merchantCountryCode: 'US',
+          billingDetails: billingDetails,
         ),
       );
 

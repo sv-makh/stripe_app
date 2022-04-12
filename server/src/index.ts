@@ -469,7 +469,11 @@ app.post('/charge-card-off-session', async (req, res) => {
 // This example sets up an endpoint using the Express framework.
 // Watch this video to get started: https://youtu.be/rPR2aJ6XnAc.
 
-app.post('/payment-sheet', async (_, res) => {
+app.post('/payment-sheet', async (req, res) => {
+  const {
+  amount,
+  }: {
+  amount: string } = req.body;
   const { secret_key } = getKeys();
 
   const stripe = new Stripe(secret_key as string, {
@@ -480,7 +484,13 @@ app.post('/payment-sheet', async (_, res) => {
   const customers = await stripe.customers.list();
 
   // Here, we're getting latest customer only for example purposes.
-  const customer = customers.data[0];
+  //const customer = customers.data[0];
+
+  const params: Stripe.CustomerCreateParams = {
+    description: 'test customer',
+  };
+  const customer: Stripe.Customer = await stripe.customers.create(params);
+  console.log(customer.id);
 
   if (!customer) {
     res.send({
@@ -493,7 +503,7 @@ app.post('/payment-sheet', async (_, res) => {
     { apiVersion: '2020-08-27' }
   );
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: 1099,
+    amount: Number(amount),
     currency: 'usd',
     customer: customer.id,
   });

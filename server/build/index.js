@@ -460,11 +460,12 @@ app.post('/charge-card-off-session', function (req, res) { return __awaiter(void
 }); });
 // This example sets up an endpoint using the Express framework.
 // Watch this video to get started: https://youtu.be/rPR2aJ6XnAc.
-app.post('/payment-sheet', function (_, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var secret_key, stripe, customers, customer, ephemeralKey, paymentIntent;
+app.post('/payment-sheet', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var amount, secret_key, stripe, customers, params, customer, ephemeralKey, paymentIntent;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                amount = req.body.amount;
                 secret_key = getKeys().secret_key;
                 stripe = new stripe_1.default(secret_key, {
                     apiVersion: '2020-08-27',
@@ -473,21 +474,27 @@ app.post('/payment-sheet', function (_, res) { return __awaiter(void 0, void 0, 
                 return [4 /*yield*/, stripe.customers.list()];
             case 1:
                 customers = _a.sent();
-                customer = customers.data[0];
+                params = {
+                    description: 'test customer',
+                };
+                return [4 /*yield*/, stripe.customers.create(params)];
+            case 2:
+                customer = _a.sent();
+                console.log(customer.id);
                 if (!customer) {
                     res.send({
                         error: 'You have no customer created',
                     });
                 }
                 return [4 /*yield*/, stripe.ephemeralKeys.create({ customer: customer.id }, { apiVersion: '2020-08-27' })];
-            case 2:
+            case 3:
                 ephemeralKey = _a.sent();
                 return [4 /*yield*/, stripe.paymentIntents.create({
-                        amount: 1099,
+                        amount: Number(amount),
                         currency: 'usd',
                         customer: customer.id,
                     })];
-            case 3:
+            case 4:
                 paymentIntent = _a.sent();
                 res.json({
                     paymentIntent: paymentIntent.client_secret,
